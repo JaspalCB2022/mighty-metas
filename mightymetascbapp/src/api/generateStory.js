@@ -16,7 +16,7 @@ export const gameStoryApi = createApi({
 
     askQuery: builder.mutation({
       query: postData => ({
-        url: '/ask/',
+        url: '/staticask/', //'/ask/',
         method: 'POST',
         body: postData,
       }),
@@ -25,7 +25,7 @@ export const gameStoryApi = createApi({
 
     generateStory: builder.mutation({
       query: postData => ({
-        url: '/generate_story/',
+        url: '/staticgenerate/', //'/generate_story/',
         method: 'POST',
         body: postData,
       }),

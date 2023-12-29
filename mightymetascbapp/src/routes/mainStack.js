@@ -2,7 +2,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {MainPage} from '../pages/main';
 import {PlayType} from '../pages/playtype';
 import {StoryCreate} from '../pages/storycreate';
-import {StoryView} from '../pages/storyView';
+import StoryView from '../pages/storyView/index';
 
 const Stack = createNativeStackNavigator();
 

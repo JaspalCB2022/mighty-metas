@@ -58,6 +58,24 @@ export default styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: '#E4D6C2',
     borderRadius: 50,
-    paddingLeft: 50,
+    paddingLeft: 70,
+  },
+  logoContainer: {
+    position: 'absolute',
+    left: 20,
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
+  },
+  logoBackground: {
+    backgroundColor: '#F5EADB',
+    paddingTop: 7,
+    paddingHorizontal: 15,
+    paddingBottom: 5,
+    borderRadius: 55,
+  },
+  logoImage: {
+    height: 35,
+    width: 25,
   },
 });
