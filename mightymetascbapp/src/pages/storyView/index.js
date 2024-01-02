@@ -7,7 +7,6 @@ import {
   ImageBackground,
   Image,
   ScrollView,
-  ActivityIndicator,
   TextInput,
   TouchableOpacity,
   Animated,
@@ -22,12 +21,9 @@ import {useSelector} from 'react-redux';
 import {selectUserSessionId} from '../../api/userSessionSlice';
 import styles from './style'; // Import styles from a separate file
 import {
-  AttackBG,
-  FullCharacter,
   LogoIconImage,
   MainBg,
   MainFullChar,
-  StoryBG,
   boxBG,
   pop_BG,
 } from '../../assets/images';
@@ -51,16 +47,6 @@ const StoryView = ({route}) => {
 
   useEffect(() => {
     getGeneratedStory(storydata);
-
-    // fadeOptinAnim.addListener(checkAllTextFadedOut);
-    // fadeInstAnim.addListener(checkAllTextFadedOut);
-    // fadeAnim.addListener(checkAllTextFadedOut);
-
-    // return () => {
-    //   fadeOptinAnim.removeAllListeners();
-    //   fadeInstAnim.removeAllListeners();
-    //   fadeAnim.removeAllListeners();
-    // };
   }, []);
 
   useEffect(() => {
@@ -70,8 +56,7 @@ const StoryView = ({route}) => {
   }, [loading]);
 
   const getGeneratedStory = async data => {
-    console.log('Call to Data > data', data);
-    //setLoading(true);
+    //console.log('Call to Data > data', data);
     setEnableInput(false);
     setScrollEnd(false);
 
@@ -81,10 +66,7 @@ const StoryView = ({route}) => {
 
     try {
       const response = await generateStory(formdata);
-
       if (response?.data) {
-        //setLoading(false);
-
         setStoryObj(response.data);
         setShowFullChar(false);
         setSelectedValue('');
@@ -140,35 +122,6 @@ const StoryView = ({route}) => {
     setShowOptions(true);
   };
 
-  //   const animate = (value, toValue, duration = 500, delay = 0) => {
-  //     return Animated.timing(value, {
-  //       toValue,
-  //       duration,
-  //       delay,
-  //       easing: Easing.linear,
-  //       useNativeDriver: true,
-  //     });
-  //   };
-
-  //   const fadeIn = () => {
-  //     Animated.stagger(125, [
-  //       animate(fadeAnim, 1),
-  //       animate(fadeInstAnim, 1),
-  //       animate(fadeOptinAnim, 1),
-  //     ]).start();
-  //   };
-
-  //   const fadeOut = () => {
-  //     setLoading(false);
-  //     Animated.stagger(125, [
-  //       animate(fadeOptinAnim, 0),
-  //       animate(fadeInstAnim, 0),
-  //       animate(fadeAnim, 0),
-  //     ]).start(() => {
-  //       setLoading(true);
-  //     });
-  //   };
-
   const fadeIn = () => {
     Animated.sequence([
       animate(fadeAnim, 1, 1000),
@@ -177,38 +130,7 @@ const StoryView = ({route}) => {
     ]).start();
   };
 
-  //   const fadeOut = () => {
-  //     setLoading(false);
-  //     // Animated.sequence([
-  //     //   animate(fadeOptinAnim, 0, 1000),
-  //     //   animate(fadeInstAnim, 0, 2000),
-  //     //   animate(fadeAnim, 0, 3000),
-  //     // ]).start(() => {
-  //     //   setLoading(true);
-  //     // });
-  //     Animated.timing(fadeOptinAnim, {
-  //       toValue: 0,
-  //       duration: 5000,
-  //       easing: Easing.linear,
-  //       useNativeDriver: true,
-  //     }).start();
-
-  //     Animated.timing(fadeInstAnim, {
-  //       toValue: 0,
-  //       duration: 3000,
-  //       easing: Easing.linear,
-  //       useNativeDriver: true,
-  //     }).start();
-
-  //     Animated.timing(fadeAnim, {
-  //       toValue: 0,
-  //       duration: 1000,
-  //       easing: Easing.linear,
-  //       useNativeDriver: true,
-  //     }).start();
-  //   };
   const fadeOut = () => {
-    //setLoading(false);
     Animated.sequence([
       Animated.timing(fadeOptinAnim, {
         toValue: 0,
@@ -240,7 +162,7 @@ const StoryView = ({route}) => {
       fadeAnim.__getValue() === 0;
 
     if (isAllTextFadedOut) {
-      console.log('All text has faded out!');
+      //console.log('All text has faded out!');
       // Perform your desired action here
       //setLoading(true);
       setShowFullChar(true);
