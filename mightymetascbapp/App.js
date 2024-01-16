@@ -4,7 +4,8 @@
  *
  * @format
  */
-import 'react-native-gesture-handler';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+
 import React from 'react';
 import AppRoute from './src/routes';
 import {Provider} from 'react-redux';
@@ -13,11 +14,13 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 function App() {
   return (
-    <Provider store={store}>
-      <SafeAreaProvider>
-        <AppRoute />
-      </SafeAreaProvider>
-    </Provider>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <Provider store={store}>
+        <SafeAreaProvider>
+          <AppRoute />
+        </SafeAreaProvider>
+      </Provider>
+    </GestureHandlerRootView>
   );
 }
 

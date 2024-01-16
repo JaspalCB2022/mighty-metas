@@ -18,7 +18,7 @@ import {generateUserSessionId} from '../../helper/session';
 import {useDispatch} from 'react-redux';
 import {setUserSessionId} from '../../api/userSessionSlice';
 
-export const MainPage = props => {
+export default MainPage = props => {
   // const userSessionId = generateUserSessionId();
   // saveUserSessionIdToStorage(userSessionId);
 
@@ -28,6 +28,10 @@ export const MainPage = props => {
     dispatch(setUserSessionId(sessionID));
     //console.log('sessionID>>>>>>', sessionID);
   }, []);
+
+  const goToPlayNewGameHandler = () => {
+    props.navigation.navigate('playtype');
+  };
   return (
     <View style={styles.container}>
       <ImageBackground source={mobile_view_BG} style={styles.backgroundImage}>
@@ -39,8 +43,7 @@ export const MainPage = props => {
           />
         </View>
         <View style={styles.buttonsFlexView}>
-          <TouchableOpacity
-            onPress={() => props.navigation.navigate('playtype')}>
+          <TouchableOpacity onPress={goToPlayNewGameHandler}>
             <Image
               source={newBTN}
               style={styles.newBTNImage}

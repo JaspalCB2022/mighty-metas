@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import {pop_BG, boxBG, LogoIconImage} from '../../assets/images';
 import styles from './style';
-import TypingText from '../../components/TypingText';
 
 const StoryContent = props => {
   const {

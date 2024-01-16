@@ -34,7 +34,7 @@ import {getUserSessionIdFromStorage} from '../../helper/session';
 import TypingText from '../../components/TypingText';
 import demoData from './demo';
 
-export const StoryCreate = props => {
+export default StoryCreate = props => {
   // const {data, isLoading, isFetching, isError, isSuccess, refetch, error} =
   //   useGamestoreQuery();
   let scroll_View = React.useRef(null);

@@ -17,7 +17,14 @@ import {
   randomImage,
 } from '../../assets/images';
 
-export const PlayType = props => {
+export default PlayType = props => {
+  const {navigation} = props;
+
+  const goToArenaStoryHandler = () => {
+    navigation.navigate('storycreate');
+    //navigation.navigate('characterview'); //('storycreate');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.mainflexcontainer}>
@@ -44,8 +51,7 @@ export const PlayType = props => {
           source={arena_BG}
           resizeMode={'cover'}
           style={styles.arenaView}>
-          <TouchableOpacity
-            onPress={() => props.navigation.navigate('storycreate')}>
+          <TouchableOpacity onPress={goToArenaStoryHandler}>
             <Image
               source={arenaImage}
               style={styles.arenaImageView}
