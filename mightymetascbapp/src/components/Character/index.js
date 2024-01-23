@@ -13,21 +13,6 @@ const CharacterComponent = ({
     new Animated.ValueXY(initialPosition || {x: 0, y: 0}),
   );
 
-  const handleZoom = () => {
-    Animated.timing(scale, {
-      toValue: 2, // Change this value based on your zoom requirements
-      duration: 500, // Adjust the duration as needed
-      useNativeDriver: true,
-    }).start();
-  };
-  const handleResetZoom = () => {
-    Animated.timing(scale, {
-      toValue: initialScale || 1,
-      duration: 500, // Adjust the duration as needed
-      useNativeDriver: true,
-    }).start();
-  };
-
   return (
     <Animated.View
       style={{
@@ -38,10 +23,7 @@ const CharacterComponent = ({
           {scale},
         ],
       }}>
-      <Image source={imageSource} style={style} />
-      <Text onPress={handleZoom}>{partName}</Text>
-      <Text onPress={handleResetZoom}>Reset Zoom</Text>
-      {/* Additional content for the character part */}
+      <Image source={imageSource} style={style} resizeMode={'contain'} />
     </Animated.View>
   );
 };

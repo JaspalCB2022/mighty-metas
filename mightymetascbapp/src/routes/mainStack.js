@@ -5,6 +5,7 @@ import StoryCreate from '../pages/storycreate';
 import StoryView from '../pages/storyView/index';
 import CharacterViewComponent from '../pages/characterView/index';
 import ZoomableImage from '../components/ZoomImage';
+import MergeImageComponent from '../pages/mergeImage/index';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,10 @@ export const MainStack = () => {
       <Stack.Screen name="storyview" component={StoryView} />
       <Stack.Screen name="characterview" component={CharacterViewComponent} />
       <Stack.Screen name="zoomview" component={ZoomableImage} />
+      <Stack.Screen
+        name="MergeImageComponent"
+        component={MergeImageComponent}
+      />
     </Stack.Navigator>
   );
 };

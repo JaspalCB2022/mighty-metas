@@ -17,9 +17,9 @@ export const BreastplateImgComponent = props => {
 const styles = StyleSheet.create({
   imageView: {
     height: 250,
-    width: 235,
+    width: 234,
     bottom: 100,
-    right: 10,
+    right: 5,
     position: 'relative',
   },
 });

@@ -103,9 +103,9 @@ export default StoryCreate = props => {
     }
   };
 
-  // React.useEffect(() => {
-  //   getAskQuery();
-  // }, []);
+  React.useEffect(() => {
+    getAskQuery();
+  }, []);
 
   return (
     <>

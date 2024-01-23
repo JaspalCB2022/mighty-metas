@@ -1,95 +1,69 @@
-import React, {useEffect, useRef, createRef} from 'react';
-import {View, StyleSheet, Text, Button} from 'react-native';
-import {Image as RNImage} from 'react-native';
-import {FullCharacter} from '../../assets/images';
-import {ReactNativeZoomableView} from '@openspacelabs/react-native-zoomable-view';
-import {Image} from 'react-native-svg';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import {Image} from 'react-native-animatable';
+import Zoom from 'react-native-zoom-reanimated';
+import {
+  BaseCharacter,
+  Breastplate,
+  FullCharacter,
+  Helmet,
+  Shield,
+  Shoes,
+  Waist,
+  Weapon,
+} from '../../assets/images';
+import CharacterComponent from '../../components/Character';
 
-const CharacterViewComponent = props => {
-  const zoomableViewRef = useRef(null);
-
+export default CharacterViewComponent = props => {
   return (
-    <View style={styles.container}>
-      <View style={{...styles.zoomWrappe, height: 160, width: 200}}>
-        <ReactNativeZoomableView
-          ref={zoomableViewRef}
-          // minZoom={1} // Set minZoom and maxZoom to the same value to disable zooming
-          // maxZoom={1}
-          contentWidth={150}
-          contentHeight={150}
-          panBoundaryPadding={400}>
-          <RNImage source={FullCharacter} style={{width: 180, height: 280}} />
-        </ReactNativeZoomableView>
-      </View>
+    <View style={{flex: 1, justifyContent: 'flex-start', alignItems: 'center'}}>
+      <CharacterComponent
+        partName="BaseCharacter"
+        initialPosition={{x: 0, y: 10}}
+        imageSource={BaseCharacter}
+        style={{width: 150, height: 250, top: 120}}
+      />
+      <CharacterComponent
+        partName="Breastplate"
+        initialPosition={{x: -14, y: 189}}
+        imageSource={Breastplate}
+        style={{width: 125, height: 190}}
+      />
 
-      <View style={styles.controlWrapperLeft}>
-        {/* Here you see some examples of moveBy */}
-        <Button
-          onPress={() => {
-            zoomableViewRef.current.moveBy(-30, 0);
-            zoomableViewRef.current.zoomTo(1.5);
-          }}
-          title="⬅️"
-          style={{backgroundColor: 'black'}}
-        />
-        <Button
-          onPress={() => {
-            zoomableViewRef.current.moveBy(30, 0);
-            zoomableViewRef.current.zoomTo(1.5);
-          }}
-          title="➡️"
-          style={{backgroundColor: 'black'}}
-        />
-        <Button
-          onPress={() => {
-            zoomableViewRef.current.moveBy(0, -30);
-            zoomableViewRef.current.zoomTo(1.5);
-          }}
-          title="⬆️"
-          style={{backgroundColor: 'black'}}
-        />
-        <Button
-          onPress={() => {
-            zoomableViewRef.current.moveBy(0, 30);
-            zoomableViewRef.current.zoomTo(1.5);
-          }}
-          title="⬇️"
-          style={{backgroundColor: 'black'}}
-        />
+      <CharacterComponent
+        partName="Sword"
+        initialPosition={{x: -70, y: 189}}
+        imageSource={Weapon}
+        style={{width: 80, height: 144}}
+      />
 
-        {/* Here you see an example of moveTo */}
-        <Button
-          onPress={() => {
-            zoomableViewRef.current.moveTo(300, 200);
-            zoomableViewRef.current.zoomTo(1.5);
-          }}
-          title="Move to"
-        />
-      </View>
+      <CharacterComponent
+        partName="Helmet"
+        initialPosition={{x: -5, y: -8}}
+        imageSource={Helmet}
+        style={{width: 125, height: 320}}
+      />
 
-      <View style={styles.controlWrapperRight}>
-        {/* Here you see examples of zoomBy */}
-        <Button
-          onPress={() => {
-            zoomableViewRef.current.zoomBy(-0.1);
-            zoomableViewRef.current.zoomTo(1.5);
-          }}
-          title="-"
-        />
-        <Button
-          onPress={() => {
-            zoomableViewRef.current.zoomBy(0.1);
-            zoomableViewRef.current.zoomTo(1.5);
-          }}
-          title="+"
-        />
+      <CharacterComponent
+        partName="Shoes"
+        initialPosition={{x: -5, y: 260}}
+        imageSource={Shoes}
+        style={{width: 91, height: 187}}
+      />
 
-        {/* Here you see an example of zoomTo */}
-        <Button
-          onPress={() => zoomableViewRef.current.zoomTo(1)}
-          title="reset"
-        />
-      </View>
+      <CharacterComponent
+        partName="Waist"
+        initialPosition={{x: 2, y: 230}}
+        imageSource={Waist}
+        style={{width: 85, height: 190}}
+      />
+
+      <CharacterComponent
+        partName="Shield"
+        initialPosition={{x: 53, y: 230}}
+        imageSource={Shield}
+        style={{width: 170, height: 144}}
+      />
     </View>
   );
 };
@@ -97,19 +71,6 @@ const CharacterViewComponent = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
     backgroundColor: 'transparent',
   },
-  zoomWrapper: {
-    marginTop: 50,
-    //borderWidth: 5,
-    flexShrink: 1,
-  },
-  controlWrapperLeft: {
-    flex: 3,
-  },
 });
-
-export default CharacterViewComponent;

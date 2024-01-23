@@ -16,6 +16,6 @@ export const demodata = {
       option: 'Something else',
     },
   ],
-  background_url:
-    'http://192.168.29.51:8000/media/generated_images/generated_image.png',
+  background_url: '',
+  ///'http://192.168.29.51:8000/media/generated_images/generated_image.png',
 };

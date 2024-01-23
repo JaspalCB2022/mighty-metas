@@ -21,8 +21,9 @@ export default PlayType = props => {
   const {navigation} = props;
 
   const goToArenaStoryHandler = () => {
-    navigation.navigate('storycreate');
-    //navigation.navigate('characterview'); //('storycreate');
+    //navigation.navigate('storycreate');
+    navigation.navigate('characterview'); //('storycreate');
+    //navigation.navigate('MergeImageComponent');
   };
 
   return (

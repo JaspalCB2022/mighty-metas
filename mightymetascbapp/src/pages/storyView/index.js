@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   Animated,
   Easing,
+  Alert,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -31,10 +32,29 @@ import {
   boxBG,
   pop_BG,
 } from '../../assets/images';
+import {demodata} from './demo';
+import ClickableText from '../../components/ClickableText';
+import CharacterComponent from '../../components/Character';
+import CharacterViewComponent from '../characterView';
+import LinearGradient from 'react-native-linear-gradient';
+import {
+  breastplateZoom,
+  clickableWords,
+  eyeZoom,
+  helmetZoom,
+  shieldZoom,
+  shoesZoom,
+  waistZoom,
+  weaponsZoom,
+} from '../../constants';
 
 const StoryView = ({route}) => {
   const {storydata} = route.params;
+
+  console.log('storydata >>>', storydata);
+
   let scrollRef = useRef(null);
+  let zoomableViewRef = useRef(null);
   const [somethingInput, setSomethingInput] = useState('');
   const [loading, setLoading] = useState(false);
   const session_id = useSelector(selectUserSessionId);
@@ -44,6 +64,7 @@ const StoryView = ({route}) => {
   const [showFullChar, setShowFullChar] = useState(false);
   const [scrollEnd, setScrollEnd] = useState(false);
   const [selectedValue, setSelectedValue] = useState('');
+  const [transform, setTransform] = useState(null);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const fadeInstAnim = useRef(new Animated.Value(0)).current;
   const fadeOptinAnim = useRef(new Animated.Value(0)).current;
@@ -51,23 +72,13 @@ const StoryView = ({route}) => {
 
   useEffect(() => {
     getGeneratedStory(storydata);
-
-    // fadeOptinAnim.addListener(checkAllTextFadedOut);
-    // fadeInstAnim.addListener(checkAllTextFadedOut);
-    // fadeAnim.addListener(checkAllTextFadedOut);
-
-    // return () => {
-    //   fadeOptinAnim.removeAllListeners();
-    //   fadeInstAnim.removeAllListeners();
-    //   fadeAnim.removeAllListeners();
-    // };
   }, []);
 
   useEffect(() => {
     if (!loading && !showFullChar && Object.keys(storyObj).length > 0) {
       scrollRef?.scrollTo({x: 0, y: 0, animated: true});
     }
-  }, [loading]);
+  }, [loading, showFullChar]);
 
   const getGeneratedStory = async data => {
     console.log('Call to Data > data', data);
@@ -81,10 +92,9 @@ const StoryView = ({route}) => {
 
     try {
       const response = await generateStory(formdata);
-
+      console.log('response >>', response);
       if (response?.data) {
         //setLoading(false);
-
         setStoryObj(response.data);
         setShowFullChar(false);
         setSelectedValue('');
@@ -133,41 +143,13 @@ const StoryView = ({route}) => {
     if (somethingInput) {
       getGeneratedStory(somethingInput);
       setSomethingInput('');
+      fadeOut();
     }
   };
 
   const handleTypingComplete = () => {
     setShowOptions(true);
   };
-
-  //   const animate = (value, toValue, duration = 500, delay = 0) => {
-  //     return Animated.timing(value, {
-  //       toValue,
-  //       duration,
-  //       delay,
-  //       easing: Easing.linear,
-  //       useNativeDriver: true,
-  //     });
-  //   };
-
-  //   const fadeIn = () => {
-  //     Animated.stagger(125, [
-  //       animate(fadeAnim, 1),
-  //       animate(fadeInstAnim, 1),
-  //       animate(fadeOptinAnim, 1),
-  //     ]).start();
-  //   };
-
-  //   const fadeOut = () => {
-  //     setLoading(false);
-  //     Animated.stagger(125, [
-  //       animate(fadeOptinAnim, 0),
-  //       animate(fadeInstAnim, 0),
-  //       animate(fadeAnim, 0),
-  //     ]).start(() => {
-  //       setLoading(true);
-  //     });
-  //   };
 
   const fadeIn = () => {
     Animated.sequence([
@@ -177,36 +159,6 @@ const StoryView = ({route}) => {
     ]).start();
   };
 
-  //   const fadeOut = () => {
-  //     setLoading(false);
-  //     // Animated.sequence([
-  //     //   animate(fadeOptinAnim, 0, 1000),
-  //     //   animate(fadeInstAnim, 0, 2000),
-  //     //   animate(fadeAnim, 0, 3000),
-  //     // ]).start(() => {
-  //     //   setLoading(true);
-  //     // });
-  //     Animated.timing(fadeOptinAnim, {
-  //       toValue: 0,
-  //       duration: 5000,
-  //       easing: Easing.linear,
-  //       useNativeDriver: true,
-  //     }).start();
-
-  //     Animated.timing(fadeInstAnim, {
-  //       toValue: 0,
-  //       duration: 3000,
-  //       easing: Easing.linear,
-  //       useNativeDriver: true,
-  //     }).start();
-
-  //     Animated.timing(fadeAnim, {
-  //       toValue: 0,
-  //       duration: 1000,
-  //       easing: Easing.linear,
-  //       useNativeDriver: true,
-  //     }).start();
-  //   };
   const fadeOut = () => {
     //setLoading(false);
     Animated.sequence([
@@ -244,6 +196,7 @@ const StoryView = ({route}) => {
       // Perform your desired action here
       //setLoading(true);
       setShowFullChar(true);
+      setTransform(null);
       getGeneratedStory(selectedValue);
     }
   };
@@ -256,28 +209,163 @@ const StoryView = ({route}) => {
       useNativeDriver: true,
     });
   };
-  // : storyObj?.background_url
-  //             ? {uri: storyObj?.background_url}
+
+  const breastplateZoomHandler = () => {
+    setTransform({
+      height: 400,
+      width: 250,
+      transform: [{scale: 3}, {translateX: 20}, {translateY: -80}],
+    });
+  };
+
+  const shieldZoomHandler = () => {
+    setTransform({
+      height: 400,
+      width: 250,
+      transform: [{scale: 1.7}, {translateX: -80}, {translateY: -90}],
+    });
+  };
+
+  const waistZoomHandler = () => {
+    setTransform({
+      height: 400,
+      width: 250,
+      transform: [{scale: 4}, {translateX: 20}, {translateY: -120}],
+    });
+  };
+
+  const eyeZoomHandler = () => {
+    setTransform({
+      height: 290,
+      width: 250,
+      transform: [{scale: 3.5}, {translateX: 30}, {translateY: 30}],
+    });
+  };
+
+  const shoesZoomHandler = () => {
+    setTransform({
+      height: 400,
+      width: 250,
+      bottom: 12,
+      transform: [{scale: 3.0}, {translateX: 10}, {translateY: -140}],
+    });
+  };
+
+  const helmetZoomHandler = () => {
+    setTransform({
+      height: 290,
+      width: 250,
+      transform: [{scale: 2}, {translateX: 30}, {translateY: 85}],
+    });
+  };
+
+  const weaponsZoomHandler = () => {
+    setTransform({
+      height: 350,
+      width: 250,
+      transform: [{scale: 2.5}, {translateX: 90}, {translateY: -25}],
+    });
+  };
+
+  const handleWordClick = word => {
+    //const weaponsZoom = ;
+
+    if (weaponsZoom.includes(word.toLowerCase())) {
+      weaponsZoomHandler();
+    } else if (helmetZoom.includes(word.toLowerCase())) {
+      helmetZoomHandler();
+    } else if (eyeZoom.includes(word.toLowerCase())) {
+      eyeZoomHandler();
+    } else if (breastplateZoom.includes(word.toLowerCase())) {
+      breastplateZoomHandler();
+    } else if (shoesZoom.includes(word.toLowerCase())) {
+      shoesZoomHandler();
+    } else if (shieldZoom.includes(word.toLowerCase())) {
+      shieldZoomHandler();
+    } else if (waistZoom.includes(word.toLowerCase())) {
+      waistZoomHandler();
+    } else {
+      setTransform(null);
+    }
+
+    // Add your custom logic here
+  };
+
+  const renderAutoZoomHandler = storyObj => {
+    if (Object.keys(storyObj).length > 0 && storyObj?.response) {
+      const words = storyObj?.response.split(/\s+/);
+      words.map((word, index) => {
+        // Check if the current word is clickable
+        const isClickable = clickableWords.includes(word.toLowerCase());
+        if (isClickable) {
+          handleWordClick(word);
+        }
+      });
+    }
+  };
+
+  React.useEffect(() => {
+    renderAutoZoomHandler(storyObj);
+  }, [storyObj]);
+
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={showFullChar ? MainFullChar : MainBg}
+        source={showFullChar ? MainFullChar : StoryBG}
         resizeMode={'cover'}
         style={{
           width: wp('100%'),
           height: hp('100%'),
           flex: 1,
+          position: 'relative',
         }}>
-        {!showFullChar && <View style={{flex: 2}} />}
         {!showFullChar && (
-          <View style={{flex: 5}}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+            }}>
+            <View
+              style={{
+                height: 370,
+                overflow: 'hidden',
+                position: 'absolute',
+                //backgroundColor: '#f386',
+                bottom: 5,
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={FullCharacter}
+                style={
+                  transform
+                    ? transform
+                    : {
+                        height: 350,
+                        width: 210,
+                      }
+                }
+              />
+            </View>
+            <LinearGradient
+              colors={['transparent', 'transparent']}
+              style={{height: 50, width: '100%'}}
+            />
+          </View>
+        )}
+        {!showFullChar && (
+          <View style={{flex: 1}}>
             <Animated.View style={{opacity: fadeAnim, flex: 1}}>
               <ImageBackground
                 source={pop_BG}
                 style={{
                   width: wp('100%'),
                   height: hp('100%'),
-                  paddingTop: 60,
+                  // paddingTop: 40,
+                  // marginTop: 70,
                 }}
                 resizeMode={'cover'}>
                 <View style={{paddingBottom: 195}}>
@@ -297,23 +385,39 @@ const StoryView = ({route}) => {
                           scrollRef.scrollToEnd({animated: true});
                         }
                       }}
+                      style={{marginBottom: 128}}
                       showsVerticalScrollIndicator={false}>
-                      <Animated.View style={{opacity: fadeAnim}}>
-                        <Text
+                      <Animated.View
+                        style={{
+                          opacity: fadeAnim,
+                          flexDirection: 'row',
+                          flexWrap: 'wrap',
+                          padding: 15,
+                        }}>
+                        <ClickableText
+                          text={storyObj?.response}
+                          //clickableWords={}
+                          onPress={handleWordClick}
                           style={{
                             fontFamily: 'PTSerif-Regular',
                             fontSize: 18,
                             color: 'black',
-                            padding: 15,
-                          }}>
-                          {storyObj?.response}
-                        </Text>
+                          }}
+                        />
                       </Animated.View>
 
-                      <Animated.View style={{opacity: fadeInstAnim}}>
-                        <Text style={{...styles.fontStyle}}>
-                          {storyObj?.instruction}
-                        </Text>
+                      <Animated.View
+                        style={{
+                          opacity: fadeInstAnim,
+                          flexDirection: 'row',
+                          flexWrap: 'wrap',
+                          padding: 15,
+                        }}>
+                        <ClickableText
+                          text={storyObj?.instruction}
+                          onPress={handleWordClick}
+                          style={{...styles.fontStyle, padding: 1}}
+                        />
                       </Animated.View>
 
                       <Animated.View style={{opacity: fadeOptinAnim}}>
@@ -326,10 +430,20 @@ const StoryView = ({route}) => {
                               ...styles.optionView,
                             }}>
                             <TouchableOpacity
+                              style={{
+                                flexDirection: 'row',
+                                flexWrap: 'wrap',
+                                padding: 5,
+                              }}
                               onPress={() => getFullStory(item)}>
-                              <Text style={styles.optionText}>
+                              <Text style={{...styles.optionText, padding: 0}}>
                                 {item?.option}
                               </Text>
+                              {/* <ClickableText
+                                text={item?.option}
+                                onPress={handleWordClick}
+                                style={{...styles.optionText, padding: 0}}
+                              /> */}
                             </TouchableOpacity>
                           </Animated.View>
                         ))}

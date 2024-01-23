@@ -52,7 +52,7 @@ export default style = StyleSheet.create({
     fontSize: 18,
     color: 'black',
     padding: 5,
-    paddingHorizontal: 15,
+    //paddingHorizontal: 15,
   },
   mainbgcontainer: {
     flex: 1,
