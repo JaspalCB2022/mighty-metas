@@ -1,5 +1,3 @@
-// Import necessary modules and components
-
 import React, {useRef, useState, useEffect} from 'react';
 import {
   View,
@@ -7,12 +5,10 @@ import {
   ImageBackground,
   Image,
   ScrollView,
-  ActivityIndicator,
   TextInput,
   TouchableOpacity,
   Animated,
   Easing,
-  Alert,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -23,19 +19,14 @@ import {useSelector} from 'react-redux';
 import {selectUserSessionId} from '../../api/userSessionSlice';
 import styles from './style'; // Import styles from a separate file
 import {
-  AttackBG,
   FullCharacter,
   LogoIconImage,
-  MainBg,
   MainFullChar,
   StoryBG,
   boxBG,
   pop_BG,
 } from '../../assets/images';
-import {demodata} from './demo';
 import ClickableText from '../../components/ClickableText';
-import CharacterComponent from '../../components/Character';
-import CharacterViewComponent from '../characterView';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   breastplateZoom,
@@ -51,10 +42,7 @@ import {
 const StoryView = ({route}) => {
   const {storydata} = route.params;
 
-  console.log('storydata >>>', storydata);
-
   let scrollRef = useRef(null);
-  let zoomableViewRef = useRef(null);
   const [somethingInput, setSomethingInput] = useState('');
   const [loading, setLoading] = useState(false);
   const session_id = useSelector(selectUserSessionId);
@@ -81,7 +69,7 @@ const StoryView = ({route}) => {
   }, [loading, showFullChar]);
 
   const getGeneratedStory = async data => {
-    console.log('Call to Data > data', data);
+    //console.log('Call to Data > data', data);
     //setLoading(true);
     setEnableInput(false);
     setScrollEnd(false);
@@ -287,15 +275,12 @@ const StoryView = ({route}) => {
     } else {
       setTransform(null);
     }
-
-    // Add your custom logic here
   };
 
   const renderAutoZoomHandler = storyObj => {
     if (Object.keys(storyObj).length > 0 && storyObj?.response) {
       const words = storyObj?.response.split(/\s+/);
       words.map((word, index) => {
-        // Check if the current word is clickable
         const isClickable = clickableWords.includes(word.toLowerCase());
         if (isClickable) {
           handleWordClick(word);

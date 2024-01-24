@@ -1,7 +1,5 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Image} from 'react-native-animatable';
-import Zoom from 'react-native-zoom-reanimated';
 import {
   BaseCharacter,
   Breastplate,
@@ -16,7 +14,12 @@ import CharacterComponent from '../../components/Character';
 
 export default CharacterViewComponent = props => {
   return (
-    <View style={{flex: 1, justifyContent: 'flex-start', alignItems: 'center'}}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+      }}>
       <CharacterComponent
         partName="BaseCharacter"
         initialPosition={{x: 0, y: 10}}
@@ -25,7 +28,7 @@ export default CharacterViewComponent = props => {
       />
       <CharacterComponent
         partName="Breastplate"
-        initialPosition={{x: -14, y: 189}}
+        initialPosition={{x: -13, y: 189}}
         imageSource={Breastplate}
         style={{width: 125, height: 190}}
       />
